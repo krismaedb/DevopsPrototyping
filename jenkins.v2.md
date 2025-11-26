@@ -55,7 +55,7 @@
 | Role | Name | Signature | Date | Approved (Y/N) | Comments |
 |------|------|-----------|------|----------------|----------|
 | Group Member | Kunwei Li | _______________ | Nov 26, 2025 | Y | Verified testing procedures |
-| Lead Implementation Engineer | Kristine Mae Bagsican | _______________ | Nov 26, 2025 | Y | Complete setup and configuration |
+| Lead Implementation | Kristine Mae Bagsican | _______________ | Nov 26, 2025 | Y | Complete setup and configuration |
 | Group Member | Jaered Bacolod | _______________ | Nov 26, 2025 | Y | Verified testing procedures |
 | Group Member | Swathi Anil | _______________ | Nov 26, 2025 | Y | Verified testing procedures |
 | Technical Reviewer | Jibing Liang | _______________ | Nov 26, 2025 | Pending | Instructor approval pending |
@@ -320,8 +320,8 @@ This SOP assumes the following:
 |-----------------|--------|----------|--------|--------|-------|
 | **1. Project Planning & Setup** |
 | Define project scope | C | A/R | C | C | I |
-| Create documentation template | I | A/R | I | I | C |
-| Assign team responsibilities | C | A/R | C | C | I |
+| Create documentation template | I | A/R | A/R | A/R | I |
+| Assign team responsibilities | C | A/R | C | A/R | I |
 | **2. Infrastructure Setup** |
 | VM provisioning & network config | I | A/R | I | I | I |
 | System updates | I | A/R | I | I | I |
@@ -330,13 +330,13 @@ This SOP assumes the following:
 | Add Jenkins repository | I | A/R | I | I | I |
 | Install Jenkins package | I | A/R | I | I | I |
 | Unlock Jenkins & initial setup | I | A/R | I | I | I |
-| Install plugins | I | A/R | I | I | I |
-| Configure Git tool | I | A/R | I | I | I |
+| Install plugins | A/R | A/R | I | I | I |
+| Configure Git tool | A/R | A/R | I | I | I |
 | **4. Version Control Setup** |
 | Create GitHub repository | I | A/R | I | I | I |
 | Generate PAT | I | A/R | I | I | I |
-| Create & push index.html | I | A/R | I | I | I |
-| Configure credentials | I | A/R | I | I | I |
+| Create & push index.html | I/R | A/R | I | I | I |
+| Configure credentials | I | A/R | I/R | I | I |
 | **5. Web Server Setup** |
 | Install Apache | I | A/R | I | I | I |
 | Start & enable service | I | A/R | I | I | I |
@@ -353,21 +353,21 @@ This SOP assumes the following:
 | Configure triggers | I | A/R | I | I | I |
 | **8. Testing & Validation** |
 | Execute first build | R | A/R | R | R | I |
-| Verify deployment | R | A/R | R | R | I |
-| Test website | R | A/R | R | R | I |
-| Change deployment test | R | A/R | R | R | I |
+| Verify deployment | R | A/R | R | A/R | I |
+| Test website | R | A/R | R | A/R | I |
+| Change deployment test | R | A/R | R | A/R | I |
 | Validate workflow | R | A/R | R | R | I |
 | **9. Documentation** |
-| Write installation steps | I | A/R | I | I | C |
-| Create troubleshooting | I | A/R | I | I | C |
+| Write installation steps | A/R | A/R | A/R | A/R | I |
+| Create troubleshooting | I | A/R | I | I | I |
 | Capture screenshots | R | A/R | R | R | I |
-| Document criteria | I | A/R | I | I | C |
-| Final review | C | A/R | C | C | A |
+| Document criteria | A/R | A/R | A/R | A/R | I |
+| Final review | C | A/R | C | A/R | A |
 | **10. Presentation** |
-| Create slides | C | A/R | C | C | I |
-| Prepare demo | C | A/R | C | C | I |
-| Rehearse | R | A/R | R | R | I |
-| Q&A preparation | R | A/R | R | R | I |
+| Create slides | A/R | A/R | A/R | A/R | I |
+| Prepare demo | A/R | A/R | A/R | A/R | I |
+| Rehearse | A/R | A/R | A/R | A/R | I |
+| Q&A preparation | A/R | A/R | A/R | A/R | I |
 
 ### 5.1 Role Definitions
 
@@ -390,6 +390,8 @@ This SOP assumes the following:
 - Supports presentation preparation
 
 **Swathi Anil - Team Member & Testing Support**
+- Creates and manages the HTML file in GitHub
+- Supports version control and repository updates
 - Assists with validation and testing procedures
 - Verifies build success and deployment functionality
 - Supports presentation preparation

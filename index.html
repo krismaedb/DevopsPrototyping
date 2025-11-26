@@ -1,27 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Jenkins CI/CD Test</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.5em;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thank You – Group 3 Demo</title>
+<style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+ 
+    /* Animation for "Success!" */
+    @keyframes fadeInPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+ 
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      animation: fadeInPop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      opacity: 0; /* Start hidden */
+    }
+ 
+    p {
+      font-size: 1.6rem;
+      max-width: 800px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 1s ease-in 0.8s forwards;
+    }
+ 
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+ 
+    .group-members {
+      background: rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+      font-size: 1.4rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-in 1.2s forwards;
+    }
+ 
+    .footer {
+      margin-top: 30px;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+ 
+    @media (max-width: 600px) {
+      h1 { font-size: 2.5rem; }
+      p { font-size: 1.3rem; }
+      .group-members { font-size: 1.2rem; }
+    }
+</style>
 </head>
 <body>
-    <h1> Hello from Jenkins CI/CD! Deployment Successful! </h1>
-    <p>This website is automatically deployed from GitHub!</p>
-    <p>Author: Group 3</p>
+<h1>Success!</h1>
+<p>This website was automatically deployed using <strong>Jenkins CI/CD</strong> from GitHub!</p>
+<p>Thank you for watching our Jenkins CI/CD pipeline demo.</p>
+<p>This presentation was created and delivered by <strong>Group 3</strong>.</p>
+<div class="group-members">
+<strong>Team Members:</strong><br />
+    Kunwei • Kristine • Jaered • Swathi
+</div>
+ 
+  <div class="footer">
+    Built with ❤️ using Jenkins + GitHub + Apache on Ubuntu
+</div>
 </body>
 </html>

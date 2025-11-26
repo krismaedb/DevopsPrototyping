@@ -22,7 +22,7 @@
 
 **Prepared By:**
 - **Kunwei Li** - Testing & Validation Support
-- **Kristine Mae Bagsican** - Lead Implementation Engineer & Documentation Author
+- **Kristine Mae Bagsican** - Lead Implementation
 - **Jaered Bacolod** - Testing & Validation Support
 - **Swathi Anil** - Testing & Validation Support
 
@@ -1970,11 +1970,12 @@ Before submitting this SOP, verify:
 
 **For questions or clarifications about this SOP:**
 
-**Lead Implementation Engineer:** Kristine Mae Bagsican  
+**Lead Implementation:** Kristine Mae Bagsican  
+**Team Members:** Kunwei Li, Jaered Bacolod, Swathi Anil  
 **Email:** maebagsican7@gmail.com  
 **Institution:** Manitoba Institute of Trades and Technology (M.I.T.T.)  
 **Program:** Network and Systems Administrator Diploma  
-**Course Instructor:** Jibing Liang
+**Course Instructor:** Jibing Liang  
 
 **Project Repository:**  
 https://github.com/krismaedb/DevopsPrototyping

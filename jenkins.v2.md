@@ -1985,7 +1985,7 @@ https://github.com/krismaedb/DevopsPrototyping
 
 **Project Status:** COMPLETE & READY FOR PRESENTATION
 
-**Implemented By:** Kristine Mae Bagsican, Kunwei Li, Jaered Bacolod, Swathi Anil
+**Implemented By:** Kristine Mae Bagsican, Kunwei Li, Jaered Bacolod, Swathi Anil  
 **Date:** November 26, 2025  
 **Document ID:** SOP-JENKINS-WEBSITE-DEPLOY-001  
 **Version:** 1.0

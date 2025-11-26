@@ -1970,9 +1970,8 @@ Before submitting this SOP, verify:
 
 **For questions or clarifications about this SOP:**
 
-**Lead Implementation:** Kristine Mae Bagsican  
-**Team Members:** Kunwei Li, Jaered Bacolod, Swathi Anil  
-**Email:** maebagsican7@gmail.com  
+**Team Members:** Kristine Mae Bagsican, Kunwei Li, Jaered Bacolod, Swathi Anil  
+**Email:** maebagsican7@gmail.com, likunwei2019@hotmail.com, swathianil@student.mitt.ca, jaeredbacolod@student.mitt.ca
 **Institution:** Manitoba Institute of Trades and Technology (M.I.T.T.)  
 **Program:** Network and Systems Administrator Diploma  
 **Course Instructor:** Jibing Liang  
@@ -1986,8 +1985,7 @@ https://github.com/krismaedb/DevopsPrototyping
 
 **Project Status:** COMPLETE & READY FOR PRESENTATION
 
-**Implemented By:** Kristine Mae Bagsican (Lead Engineer)  
-**Testing Support:** Kunwei Li, Jaered Bacolod, Swathi Anil  
+**Implemented By:** Kristine Mae Bagsican, Kunwei Li, Jaered Bacolod, Swathi Anil
 **Date:** November 26, 2025  
 **Document ID:** SOP-JENKINS-WEBSITE-DEPLOY-001  
 **Version:** 1.0

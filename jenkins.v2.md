@@ -1971,7 +1971,7 @@ Before submitting this SOP, verify:
 **For questions or clarifications about this SOP:**
 
 **Team Members:** Kristine Mae Bagsican, Kunwei Li, Jaered Bacolod, Swathi Anil  
-**Email:** maebagsican7@gmail.com, likunwei2019@hotmail.com, swathianil@student.mitt.ca, jaeredbacolod@student.mitt.ca
+**Email:** maebagsican7@gmail.com, likunwei2019@hotmail.com, swathianil@student.mitt.ca, jaeredbacolod@student.mitt.ca  
 **Institution:** Manitoba Institute of Trades and Technology (M.I.T.T.)  
 **Program:** Network and Systems Administrator Diploma  
 **Course Instructor:** Jibing Liang  

@@ -394,7 +394,15 @@ curl http://localhost
 ```bash
 sudo apt install -y python3 python3-pip python3-venv python3-dev
 sudo apt install -y libapache2-mod-wsgi-py3
-sudo apt install -y python3-flask python3-flask-sqlalchemy
+sudo apt update
+sudo apt install -y python3-venv python3-pip python3-flask
+#Create a virtual environment:
+python3 -m venv venv
+#Activate it:
+source venv/bin/activate
+#Now install Flask-SQLAlchemy normally:
+pip install Flask-SQLAlchemy
+#No more errors because pip installs inside the venv, not system-wide.
 
 # Verify
 python3 --version
@@ -413,6 +421,14 @@ sudo systemctl status postgresql
 ```
 
 Press **Q**
+
+### INSTALLING PSQL GUI
+1. Install docker because ubuntu noble is not compatible to the repository of psql (compatibility issue)
+```bash
+sudo docker pull dpage/pgadmin4
+sudo docker run -p 86:86 -e PGADMIN_DEFAULT_EMAIL=admin@g3company.com -e PGADMIN_DEFAULT_PASSWORD=g3company\!@# -d dpage/pgadmin4
+```bash
+
 
 ### Step 6.2: Create Database
 ```bash

@@ -1,27 +1,44 @@
-# Enable IP forwarding (required for subnet routing)
-echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.conf
-echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
+# 🟦 SOP: How to Join the Lab Using Your Own Tailscale Account  
+_For extra team members — no changes needed on the existing Ubuntu VPN server._
 
-# Restart Tailscale with subnet routing enabled
-sudo tailscale up --advertise-routes=10.10.40.0/24 --accept-routes
-```
+---
 
-### Step 3: Approve Subnet Routes in Tailscale Admin
+## ✅ Overview
+This guide is for a team member who will:
+- Create **their own Tailscale account** (para free)
+- Install Tailscale on their own laptop/PC
+- Receive the **shared VPN server** from Kristine
+- Access Proxmox and all lab servers through that shared access
 
-1. Go to https://login.tailscale.com/admin/machines
-2. Find your Proxmox machine in the list
-3. Click the "..." menu → Edit route settings
-4. **Approve the subnet route** for 10.10.40.0/24
-5. (Optional) Enable "Exit node" if you want to route all traffic through Proxmox
+**IMPORTANT:**  
+You will NOT join Kristine’s tailnet.  
+She will simply **share the VPN server** with you — unlimited & free.
 
-### Step 4: Access Proxmox Web UI
+---
 
-Once connected, you can access Proxmox from anywhere using:
-```
-https://<proxmox-tailscale-ip>:8006
-```
+# 1. Create Your Own Tailscale Account
 
-Or if you want to use the local IP through the Tailscale tunnel:
-```
-https://10.10.40.100:8006
+1. Open: https://login.tailscale.com  
+2. Click **Sign In**  
+3. Choose:
+   - Google  
+   - Microsoft  
+   - or Email login  
+4. Once inside, your dashboard will be empty — this is normal.
+
+---
+
+# 2. Install Tailscale on Your Laptop/PC
+
+## **If you use Windows:**
+1. Download installer:  
+   https://tailscale.com/download/windows
+2. Install and open the Tailscale app
+3. Sign in using **your OWN Tailscale account** (not Kristine's)
+
+## **If you use Linux (Ubuntu/Debian):**
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+

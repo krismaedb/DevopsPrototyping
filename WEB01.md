@@ -426,9 +426,16 @@ Press **Q**
 1. Install docker because ubuntu noble is not compatible to the repository of psql (compatibility issue)
 ```bash
 sudo docker pull dpage/pgadmin4
-sudo docker run -p 86:86 -e PGADMIN_DEFAULT_EMAIL=admin@g3company.com -e PGADMIN_DEFAULT_PASSWORD=g3company\!@# -d dpage/pgadmin4
+sudo docker run -p 8080:80 -e PGADMIN_DEFAULT_EMAIL=admin@g3company.com -e PGADMIN_DEFAULT_PASSWORD=g3company\!@# -d dpage/pgadmin4
+sudo docker ps
+sudo docker restart "container id"
 ```bash
 
+### THEN TEST IN BROWSER
+http://localhost:8080
+http://10.10.40.30:8080
+EMAIL: admin@g3company.com
+PW: g3company!@#
 
 ### Step 6.2: Create Database
 ```bash

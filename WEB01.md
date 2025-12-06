@@ -423,19 +423,36 @@ sudo systemctl status postgresql
 Press **Q**
 
 ### INSTALLING PSQL GUI
-1. Install docker because ubuntu noble is not compatible to the repository of psql (compatibility issue)
+# Complete steps to install Docker, stop Apache, pull pgAdmin4, and run the container
+Install docker because ubuntu noble is not compatible to the repository of psql (compatibility issue)
 ```bash
-sudo docker pull dpage/pgadmin4
-sudo docker run -p 8080:80 -e PGADMIN_DEFAULT_EMAIL=admin@g3company.com -e PGADMIN_DEFAULT_PASSWORD=g3company\!@# -d dpage/pgadmin4
-sudo docker ps
-sudo docker restart "container id"
-```bash
+sudo apt update &&
+sudo apt install docker.io -y 
+sudo systemctl enable docker 
+sudo systemctl start docke
 
-### THEN TEST IN BROWSER
+# Pull the pgAdmin4 image from Docker Hub
+sudo docker pull dpage/pgadmin4 
+
+# Restart Docker service
+sudo systemctl restart docker &&
+
+# Run the pgAdmin4 container
+sudo docker run -p 8080:80 -e PGADMIN_DEFAULT_EMAIL=admin@g3company.com -e PGADMIN_DEFAULT_PASSWORD=g3company\!@# -d dpage/pgadmin4
+
+# Verify the container is running
+sudo docker ps
+
+#Restart the container
+sudo docker restart "container id"
+sudo docker restart a1b2c3d4e5f6
+
+# Access pgAdmin in your browser:
 http://localhost:8080
 http://10.10.40.30:8080
 EMAIL: admin@g3company.com
 PW: g3company!@#
+```bash
 
 ### Step 6.2: Create Database
 ```bash

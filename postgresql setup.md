@@ -293,10 +293,4 @@ Healthcare Clinic Portal is running!
 Why:
 Confirms your Flask app is running and connected to PostgreSQL correctly.
 
----
-
-## ✔️ Deployment SUCCESS  
-This `.md` contains everything we did:  
-setup → venv → install → DB → routes → run.
-
 

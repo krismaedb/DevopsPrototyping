@@ -68,34 +68,43 @@ sudo -u postgres psql -c "\du"
 ---
 ---
 
-# 🍃 Flask + PostgreSQL Deployment (Ubuntu Server)  
+## 🍃 Flask + PostgreSQL Deployment (Ubuntu Server)  
 **Project:** Healthcare Clinic Portal  
 **Status:** WORKING (Flask + venv + PostgreSQL + Routes)  
 **Format:** Single-file documentation
 
 ---
 
-## 📌 1. Create Project Directory
+# 📌 1. Create Project Directory
 ```bash
 sudo mkdir -p /var/www/healthclinic
 sudo chown -R webadmin:webadmin /var/www/healthclinic
 cd /var/www/healthclinic
 ```
+Why:
+We need a folder to keep all our Flask code, database connections, templates, and static files.
+chown → makes you the owner so you can read/write without sudo.
+cd → move into the project folder.
 
 ---
 
-## 📌 2. Create Virtual Environment
+# 📌 2. Create Virtual Environment
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install flask flask_sqlalchemy psycopg2-binary
 ```
+Why:
+Virtual environment isolates Python packages for this project → no conflict with other projects.
+flask → the web framework.
+flask_sqlalchemy → makes interacting with PostgreSQL easier.
+psycopg2-binary → the driver that lets Python talk to PostgreSQL.
 
 ---
 
-## 📌 3. PostgreSQL Setup
+# 📌 3. PostgreSQL Setup
 
-### Create PostgreSQL role and DB
+## Create PostgreSQL role and DB
 ```bash
 sudo -u postgres psql
 ```
@@ -106,6 +115,11 @@ CREATE ROLE webadmin WITH LOGIN SUPERUSER PASSWORD 'T@ylorSwift13';
 CREATE DATABASE healthclinic OWNER webadmin;
 \q
 ```
+Why:
+CREATE ROLE → make a PostgreSQL user with a password.
+SUPERUSER → so it can create tables, etc.
+CREATE DATABASE → make a database called healthclinic.
+OWNER webadmin → this user owns the DB.
 
 To verify:
 ```bash
@@ -114,7 +128,7 @@ sudo -u postgres psql -c "\du"
 
 ---
 
-## 📌 4. Flask App Structure
+# 📌 4. Flask App Structure
 Directory layout:
 
 ```
@@ -129,10 +143,17 @@ Directory layout:
     ├── templates/
     └── static/
 ```
+Why:
+run.py → starts the Flask server.
+__init__.py → sets up Flask + database connection.
+models.py → defines tables like Patient, Employee, etc.
+routes.py → defines web pages / API endpoints.
+templates/ → HTML files.
+static/ → CSS, JS, images.
 
 ---
 
-## 📌 5. `app/__init__.py`
+# 📌 5. `app/__init__.py`
 ```python
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -159,10 +180,14 @@ def create_app():
 
     return app
 ```
+Why:
+This tells Flask how to connect to PostgreSQL.
+Notice the %40 → @ is URL encoded because passwords with @ need encoding.
+db.init_app(app) → connects SQLAlchemy to Flask.
 
 ---
 
-## 📌 6. `app/models.py`
+# 📌 6. `app/models.py`
 ```python
 from . import db
 
@@ -171,10 +196,15 @@ class Patient(db.Model):
     name = db.Column(db.String(120), nullable=False)
     birthdate = db.Column(db.String(20))
 ```
+Why:
+db.Model → each class is a database table.
+id → primary key (unique identifier).
+name → a field for the patient’s name.
+This is how Flask knows what tables to create in PostgreSQL.
 
 ---
 
-## 📌 7. `app/routes.py`
+# 📌 7. `app/routes.py`
 ```python
 from flask import Blueprint
 
@@ -184,10 +214,14 @@ main_bp = Blueprint("main", __name__)
 def index():
     return "Healthcare Clinic Portal is running!"
 ```
+Why:
+This defines a web page route.
+/ → root page.
+When you go to http://IP:5000/ in browser, you see this message.
 
 ---
 
-## 📌 8. Create DB Tables
+# 📌 8. Create DB Tables
 Run Python shell INSIDE venv:
 
 ```bash
@@ -211,10 +245,13 @@ Exit:
 ```python
 quit()
 ```
+Why:
+This reads models.py and creates tables in PostgreSQL automatically.
+app.app_context() → Flask needs this so SQLAlchemy knows which app it belongs to.
 
 ---
 
-## 📌 9. `run.py` (Flask entry point)
+# 📌 9. `run.py` (Flask entry point)
 ```python
 from app import create_app
 
@@ -223,23 +260,29 @@ app = create_app()
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 ```
+Why:
+0.0.0.0 → makes Flask accessible from outside, not just localhost.
+port=5000 → the port the app listens on.
+debug=True → shows errors in browser, auto-reloads on code change.
 
 ---
 
-## 📌 10. Run Flask
+# 📌 10. Run Flask
 ```bash
 cd /var/www/healthclinic
 source venv/bin/activate
 python3 run.py
 ```
+Why:
+Starts the Flask server so you can open your browser and see the app.
 
 ---
 
-## 📌 11. Test  
+# 📌 11. Test  
 Visit:
 
 ```
-http://YOUR-SERVER-IP:5000/
+http://10.10.40.30:5000/
 ```
 
 Expected:
@@ -247,6 +290,8 @@ Expected:
 ```
 Healthcare Clinic Portal is running!
 ```
+Why:
+Confirms your Flask app is running and connected to PostgreSQL correctly.
 
 ---
 

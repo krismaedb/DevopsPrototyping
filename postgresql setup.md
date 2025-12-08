@@ -293,4 +293,130 @@ Healthcare Clinic Portal is running!
 Why:
 Confirms your Flask app is running and connected to PostgreSQL correctly.
 
+###  PART 8: Apache WSGI Configuration 
+
+# Why We Added Apache + WSGI
+
+In this section, we set up Apache and WSGI so our Flask system can run like a real website. Flask alone is good for development, but it is not designed to run a production website by itself. Apache + WSGI makes the application stable, secure, and always running in the background.
+
+---
+
+# 📌 1. Project Folder Structure
+
+Your /var/www/healthclinic should look like:
+
+/var/www/healthclinic
+│── app/
+│ ├── init.py
+│ └── ...
+│── venv/
+│── **healthclinic.wsgi**
+└── requirements.txt
+
+---
+# Why We Need Apache
+
+Apache is a web server.
+It receives requests from the browser (ex. http://10.10.40.30) and delivers the correct response.
+
+Flask can do this, but only for testing.
+Apache is better because:
+- It runs the website 24/7
+- It can handle many users at the same time
+- It can manage logs and errors
+- It is the standard setup for real deployments
+
+# 📌 2. Create the WSGI File
+
+Location: /var/www/healthclinic/healthclinic.wsgi
+
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+
+# Insert the project directory into the Python path
+sys.path.insert(0, "/var/www/healthclinic")
+
+# Import the application factory function
+from app import create_app
+
+# The 'application' variable name is required by mod_wsgi
+application = create_app()
+
+**✔ Explanation**
+sys.path.insert(0, "...") → tells Apache where your Flask project folder is.
+create_app() → loads your Flask factory application.
+application → required variable name for mod_wsgi.
+
+---
+
+## 📌 3. Apache Virtual Host Config
+
+Location: /etc/apache2/sites-available/healthclinic.conf
+
+<VirtualHost *:80>
+    ServerName 10.10.40.30
+
+    # Define the daemon process group for the application
+    WSGIDaemonProcess healthclinic \
+        python-home=/var/www/healthclinic/venv \
+        python-path=/var/www/healthclinic
+
+    # Assign the WSGI script to the defined daemon process group
+    WSGIProcessGroup healthclinic
+    # Map the root URL (/) to the WSGI script
+    WSGIScriptAlias / /var/www/healthclinic/healthclinic.wsgi
+
+    # Allow access to the WSGI script directory
+    <Directory /var/www/healthclinic>
+        Require all granted
+    </Directory>
+
+    # Log files
+    ErrorLog ${APACHE_LOG_DIR}/healthclinic_error.log
+    CustomLog ${APACHE_LOG_DIR}/healthclinic_access.log combined
+</VirtualHost>
+
+**✔ Explanation**
+WSGIDaemonProcess: Creates a dedicated process for your app.
+python-home: Path to your application's **virtual environment** (venv).
+python-path: Path to your Flask **project folder**.
+WSGIScriptAlias: Tells Apache which **WSGI file** to load and the URL path to serve it from (/).
+<Directory>: Grants access to the file path.
+Logs: Essential for debugging errors.
+
+---
+
+## 📌 4. Enable the Site + Restart Apache
+
+Run the following commands:
+
+# Ensure the mod_wsgi module is enabled
+sudo a2enmod wsgi
+
+# Enable the virtual host configuration file
+sudo a2ensite healthclinic.conf
+
+# Restart the Apache web server to apply changes
+sudo systemctl restart apache2
+
+---
+
+## 📌 5. Support Commands for Debugging
+
+Check config syntax:
+sudo apache2ctl configtest
+
+View error logs:
+sudo tail -n 50 /var/log/apache2/healthclinic_error.log
+
+---
+
+## 📌 6. Final Result
+
+If everything is correct, visiting: [http://10.10.40.30](http://10.10.40.30)
+
+will show: Healthcare Clinic Portal is running!
+
+successfully deployed using Apache + WSGI!
 

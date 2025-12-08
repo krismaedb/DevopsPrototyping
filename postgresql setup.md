@@ -306,12 +306,12 @@ In this section, we set up Apache and WSGI so our Flask system can run like a re
 Your /var/www/healthclinic should look like:
 
 /var/www/healthclinic
-│── app/
-│ ├── init.py
-│ └── ...
-│── venv/
-│── **healthclinic.wsgi**
-└── requirements.txt
+* app/
+    * init.py
+    * ... (other app files, e.g., routes.py, models.py)
+* venv/
+* **healthclinic.wsgi**
+* requirements.txt
 
 ---
 # Why We Need Apache

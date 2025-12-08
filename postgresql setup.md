@@ -427,13 +427,16 @@ sudo a2ensite healthclinic.conf
 sudo systemctl restart apache2
 
 ---
+
 Why We Enabled the Site and Restarted Apache
 After creating the configuration file, we must enable it so Apache recognizes it.
 Restarting Apache reloads all the new settings.
 Once enabled, the Flask application becomes accessible through:
+
 ```bash
 http://10.10.40.30
 ```bash
+
 (Port 80 — the standard web port)
 This is why the application no longer runs on port 5000.
 
@@ -465,7 +468,7 @@ Standard Operating Procedure — HealthClinic Flask Web UI
 
 This document describes the steps to build the public Landing Page for the HealthClinic Flask Application.
 
----
+----
 
 ## ✅ 1. UI Layout Structure
 

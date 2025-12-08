@@ -665,6 +665,7 @@ Max mailboxes: 10
 Max aliases: 10
 Max quota: 3072 MB
 ```
+<img width="1563" height="363" alt="image" src="https://github.com/user-attachments/assets/9a54c3a9-a7ab-41ba-8d3e-2e7529b443c3" />
 
 4. Click **Add domain and restart SOGo**
 
@@ -683,6 +684,7 @@ Confirm: Clinic@2025!
 Quota: 3072 MB
 Active: ☑
 ```
+<img width="1629" height="526" alt="image" src="https://github.com/user-attachments/assets/87a27245-2164-4967-a3c6-b06c11c7e172" />
 
 3. Click **Add**
 
@@ -696,6 +698,13 @@ Active: ☑
 - doctor@healthclinic.local
 - reception@healthclinic.local
 - it@healthclinic.local
+
+<img width="1908" height="908" alt="image" src="https://github.com/user-attachments/assets/1cc172e5-8480-4e89-a842-6849e5385723" />
+
+
+<img width="1875" height="968" alt="image" src="https://github.com/user-attachments/assets/1fad60af-1146-4c1c-a434-b395ed1b35ab" />
+
+
 
 ### Step 8.6: Test Webmail
 

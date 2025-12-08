@@ -328,6 +328,14 @@ Apache is better because:
 
 # 📌 2. Create the WSGI File
 
+Why We Need WSGI
+- WSGI is the connector between Apache and Flask.
+- Apache doesn’t understand Python by default.
+- WSGI acts like a “translator” that tells Apache how to run our Python Flask application.
+
+So the flow becomes:
+Browser → Apache → WSGI → Flask → Database
+
 Location: /var/www/healthclinic/healthclinic.wsgi
 
 import sys
@@ -347,6 +355,14 @@ application = create_app()
 sys.path.insert(0, "...") → tells Apache where your Flask project folder is.
 create_app() → loads your Flask factory application.
 application → required variable name for mod_wsgi.
+
+Why We Created healthclinic.wsgi
+This file is the entry point for Apache.
+It tells Apache:
+- where the Flask project is located
+- how to load the create_app() function
+- what variable to run as the application
+- Apache reads this file and launches the Flask system automatically.
 
 ---
 
@@ -386,6 +402,16 @@ WSGIScriptAlias: Tells Apache which **WSGI file** to load and the URL path to se
 Logs: Essential for debugging errors.
 
 ---
+Why We Made a Virtual Host (healthclinic.conf)
+The Apache VirtualHost configuration defines:
+- the server IP or domain
+- the folder where the project is located
+- the virtual environment to use
+- the WSGI file that starts the app
+- the access permissions
+
+In short:
+It tells Apache “this is where the website is, and this is how you run it.”
 
 ## 📌 4. Enable the Site + Restart Apache
 
@@ -401,6 +427,15 @@ sudo a2ensite healthclinic.conf
 sudo systemctl restart apache2
 
 ---
+Why We Enabled the Site and Restarted Apache
+After creating the configuration file, we must enable it so Apache recognizes it.
+Restarting Apache reloads all the new settings.
+Once enabled, the Flask application becomes accessible through:
+```bash
+http://10.10.40.30
+```bash
+(Port 80 — the standard web port)
+This is why the application no longer runs on port 5000.
 
 ## 📌 5. Support Commands for Debugging
 
@@ -412,11 +447,13 @@ sudo tail -n 50 /var/log/apache2/healthclinic_error.log
 
 ---
 
+
 ## 📌 6. Final Result
 
 If everything is correct, visiting: [http://10.10.40.30](http://10.10.40.30)
-
 will show: Healthcare Clinic Portal is running!
-
 successfully deployed using Apache + WSGI!
+
+# Final Summary (For Documentation)
+Apache + WSGI allows our Flask + PostgreSQL system to run like a production website. Flask is still the core application, but Apache handles all incoming web requests and uses WSGI to communicate with the Python backend. This setup ensures stability, proper resource handling, and accessibility through a normal web browser.
 

@@ -495,13 +495,31 @@ mkdir /var/www/healthclinic/app/static
 
 Open `/var/www/healthclinic/app/routes.py`:
 
+```bash
 from flask import Blueprint, render_template
 
-views = Blueprint('views', __name__)
+main = Blueprint('main', __name__)
 
-@views.route('/')
+# --- Landing Page ---
+@main.route('/')
 def home():
     return render_template('index.html')
+
+# --- Appointment Booking Page ---
+@main.route('/book')
+def book_appointment():
+    return render_template('book.html')
+
+# --- Login Page (placeholder) ---
+@main.route('/login')
+def login():
+    return render_template('login.html')
+
+# --- Dashboard Page (placeholder for staff only) ---
+@main.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+```bash
 
 ---
 
@@ -509,26 +527,28 @@ def home():
 
 Open `/var/www/healthclinic/app/__init__.py`:
 
-from flask import Flask  
-from flask_sqlalchemy import SQLAlchemy  
+```bash
+
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-def create_app():  
-    app = Flask(__name__)  
-
-    app.config["SQLALCHEMY_DATABASE_URI"] = (  
-        "postgresql://webadmin:T%40ylorSwift13@127.0.0.1:5432/healthclinic"  
-    )  
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  
+def create_app():
+    app = Flask(__name__)
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        "postgresql://webadmin:T%40ylorSwift13@127.0.0.1:5432/healthclinic"
+    )
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)
 
-    # Register Blueprint  
-    from .routes import views  
-    app.register_blueprint(views)
+    from .routes import main
+    app.register_blueprint(main)
 
     return app
+
+```bash
 
 ---
 
@@ -536,59 +556,61 @@ def create_app():
 
 Inside `/var/www/healthclinic/app/templates/index.html`:
 
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>HealthClinic</title>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthClinic</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">  
-</head>  
-<body class="bg-light">  
-    <nav class="navbar navbar-dark bg-primary">  
-        <div class="container">  
-            <a class="navbar-brand" href="/">🏥 HealthClinic</a>  
-        </div>  
-    </nav>  
+    <!-- Free Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-    <header class="text-center py-5 bg-white shadow-sm">  
-        <h1 class="mb-3">Welcome to HealthClinic</h1>  
-        <p class="lead">Your trusted neighborhood medical care provider</p>  
-        <a href="#" class="btn btn-primary btn-lg">Book Appointment</a>  
-    </header>  
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">🏥 HealthClinic</a>
+        </div>
+    </nav>
 
-    <section class="container py-5">  
-        <h2 class="text-center mb-4">Our Services</h2>  
+    <header class="text-center py-5 bg-white shadow-sm">
+        <h1 class="mb-3">Welcome to HealthClinic</h1>
+        <p class="lead">Your trusted neighborhood medical care provider</p>
+        <a href="#" class="btn btn-primary btn-lg">Book Appointment</a>
+    </header>
 
-        <div class="row text-center">  
-            <div class="col-md-4 mb-4">  
-                <div class="p-4 bg-white shadow-sm rounded">  
-                    <h4>General Checkup</h4>  
-                    <p>Routine medical exams for all ages.</p>  
-                </div>  
-            </div>  
+    <section class="container py-5">
+        <h2 class="text-center mb-4">Our Services</h2>
 
-            <div class="col-md-4 mb-4">  
-                <div class="p-4 bg-white shadow-sm rounded">  
-                    <h4>Pediatrics</h4>  
-                    <p>Professional care dedicated for children.</p>  
-                </div>  
-            </div>  
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="p-4 bg-white shadow-sm rounded">
+                    <h4>General Checkup</h4>
+                    <p>Routine medical exams for all ages.</p>
+                </div>
+            </div>
 
-            <div class="col-md-4 mb-4">  
-                <div class="p-4 bg-white shadow-sm rounded">  
-                    <h4>Laboratory Tests</h4>  
-                    <p>Fast and reliable diagnostic testing.</p>  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
+            <div class="col-md-4 mb-4">
+                <div class="p-4 bg-white shadow-sm rounded">
+                    <h4>Pediatrics</h4>
+                    <p>Professional care dedicated for children.</p>
+                </div>
+            </div>
 
-    <footer class="text-center py-3 bg-primary text-white">  
-        © 2025 HealthClinic. All rights reserved.  
-    </footer>  
-</body>  
+            <div class="col-md-4 mb-4">
+                <div class="p-4 bg-white shadow-sm rounded">
+                    <h4>Laboratory Tests</h4>
+                    <p>Fast and reliable diagnostic testing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center py-3 bg-primary text-white">
+        © 2025 HealthClinic. All rights reserved.
+    </footer>
+</body>
 </html>
 
 ---

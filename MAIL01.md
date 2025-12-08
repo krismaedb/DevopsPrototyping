@@ -528,14 +528,46 @@ docker ps
 
 ## Part 7: Mailcow Installation
 
-### Step 7.1: Clone Mailcow
+## Log into your **MAIL01** terminal (via XFCE or SSH) and run these one by one – this corrects the repository file and forces a clean setup.
+
+### 7.1. Fix DNS First (if curl fails – points to your domain controllers)
+
 ```bash
-cd /opt
-sudo git clone https://github.com/mailcow/mailcow-dockerized
-cd mailcow-dockerized
+sudo nano /etc/resolv.conf
+```
+Replace the contents with:
+```bash
+textnameserver 10.10.40.10  # DC01 DNS
+nameserver 10.10.40.11  # DC02 DNS
+nameserver 8.8.8.8      # Fallback Google DNS
 ```
 
-### Step 7.2: Generate Configuration
+### 7.2 Clean Up the Broken Repository File
+```bash
+sudo rm -f /etc/apt/sources.list.d/docker.list
+sudo apt update  # This should now run without Docker errors
+```
+
+### 7.3. Re-Run the Corrected Docker Repository Addition (Fixed Echo Command)
+Copy-paste this exact block (the missing backslash is now fixed – properly multi-line):
+```bash
+# Add GPG key (safe to re-run)
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+```
+# Add repository (CORRECTED: proper backslashes for multi-line)
+```bash
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+```
+### 7. 4. Verify the Fix (Check What Was Written)
+Bashcat /etc/apt/sources.list.d/docker.list
+### Step 7.5: Generate Configuration
 ```bash
 sudo ./generate_config.sh
 ```
@@ -546,7 +578,7 @@ Mail server hostname (FQDN):
 mail01.healthclinic.local
 ```
 
-### Step 7.3: Edit Configuration
+### Step 7.5: Edit Configuration
 ```bash
 sudo nano mailcow.conf
 ```

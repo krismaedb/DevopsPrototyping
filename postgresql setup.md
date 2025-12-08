@@ -433,9 +433,7 @@ After creating the configuration file, we must enable it so Apache recognizes it
 Restarting Apache reloads all the new settings.
 Once enabled, the Flask application becomes accessible through:
 
-```bash
 http://10.10.40.30
-```bash
 
 (Port 80 — the standard web port)
 This is why the application no longer runs on port 5000.

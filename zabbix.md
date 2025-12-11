@@ -500,6 +500,162 @@ Zabbix Web Interface:
 - Default Password: zabbix
 
 
+# PART 14: ADD NETWORK DEVICES TO ZABBIX
+🐧 ADD WEB01 (Web Server) TO ZABBIX
+
+Step 1: Download Correct Repository
+Still on WEB01
+cd /tmp
+
+ CORRECT COMMANDS FOR ZABBIX 7.0 LTS + UBUNTU 24.04
+On WEB01
+
+1. Download Zabbix repository
+wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.0+ubuntu24.04_all.deb
+
+2. Install repository package
+sudo dpkg -i zabbix-release_latest_7.0+ubuntu24.04_all.deb
+
+3. Update package list
+sudo apt update
+
+4. Install Zabbix Agent 2
+sudo apt install -y zabbix-agent2
+
+5. Verify installation
+dpkg -l | grep zabbix
+
+
+Step 3: Configure Agent - CRITICAL PART
+
+Edit configuration
+sudo nano /etc/zabbix/zabbix_agent2.conf
+
+Find and modify EXACTLY these 3 lines:
+Press Ctrl+W to search for each:
+
+Search: Server=
+ini### Option: Server
+Server=10.10.40.40
+
+Search: ServerActive=
+
+ini### Option: ServerActive
+ServerActive=10.10.40.40
+
+Search: Hostname=
+ini### Option: Hostname
+Hostname=WEB01
+
+IMPORTANT: Make sure to uncomment (remove # if present)!
+Save: Ctrl+X → Y → Enter
+
+Step 8: Verify Configuration
+
+bash# Check configuration
+sudo grep -E "^(Server|ServerActive|Hostname)" /etc/zabbix/zabbix_agent2.conf
+
+Should show EXACTLY:
+Server=10.10.40.40
+ServerActive=10.10.40.40
+Hostname=WEB01
+
+Step 4: Start Zabbix Agent
+Start agent
+sudo systemctl start zabbix-agent2
+
+Enable on boot
+sudo systemctl enable zabbix-agent2
+
+Check status
+sudo systemctl status zabbix-agent2
+
+Should show: active (running) ✅
+
+
+Step 5: Verify Port is Listening
+Check port 10050
+sudo ss -tunlp | grep 10050
+
+Should show:
+LISTEN  0  128  0.0.0.0:10050  users:(("zabbix_agent2",pid=XXXX))
+
+Step 5: Test from ZABBIX01
+bash# Exit from WEB01
+exit
+
+Now on ZABBIX01, test connectivity
+zabbix_get -s 10.10.40.30 -k agent.ping
+
+Should return: 1 ✅
+
+zabbix_get -s 10.10.40.30 -k agent.version
+
+
+# ADD IN ZABBIX WEB UI
+Host name: WEB01
+IP: 10.10.40.30
+Template: Linux by Zabbix agent
+Host group: Linux servers
+
+
+Step 2: Create Host
+
+Go to: Data collection → Hosts
+Click "Create host" (top right)
+
+
+Step 3: Fill in Host Details
+Host tab:
+FieldValueHost name - WEB01 ← EXACTLY "WEB01", nothing else!
+Visible name - WEB01 - Web Application Server
+Templates - Click "Select" → Search: Linux → Check ☑️ "Linux by Zabbix agent" → Click "Select"
+Host groups - Click "Select" → Check ☑️ "Linux servers" → Click "Select"
+
+Interfaces section:
+1. Click "Add" → Select "Agent"
+Fill in:
+IP address: 10.10.40.30
+DNS name: (leave empty)
+Connect to: IP
+Port: 10050
+
+
+
+
+Step 4: Save
+Click "Add" (blue button at bottom)
+Should see: "Host added" success message
+
+Step 5: Verify Status
+Go to: Monitoring → Hosts
+Find WEB01
+Wait 2-3 minutes (important!)
+Refresh page: Press Ctrl+F5
+
+Should see:
+Status: Enabled (green)
+Availability: 🟢 ZBX (green icon)
+
+
+Step 6: Check Latest Data
+On Monitoring → Hosts page
+Click "Latest data" link next to WEB01
+
+Should see metrics:
+CPU usage
+Memory usage
+Disk space
+Network traffic
+System uptime
+
+
+
+
+
+
+
+
 
 
 

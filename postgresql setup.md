@@ -455,6 +455,8 @@ If everything is correct, visiting: [http://10.10.40.30](http://10.10.40.30)
 will show: Healthcare Clinic Portal is running!
 successfully deployed using Apache + WSGI!
 
+** The server will display the full Healthcare Clinic web interface once Your current deployed version = full GUI landing page
+
 # Final Summary (For Documentation)
 Apache + WSGI allows our Flask + PostgreSQL system to run like a production website. Flask is still the core application, but Apache handles all incoming web requests and uses WSGI to communicate with the Python backend. This setup ensures stability, proper resource handling, and accessibility through a normal web browser.
 
@@ -466,6 +468,248 @@ Standard Operating Procedure — HealthClinic Flask Web UI
 
 This document describes the steps to build the public Landing Page for the HealthClinic Flask Application.
 
+
+
 ----
+
+## HIGH‑LEVEL DIAGRAM: How Everything Connects
+
+             ┌──────────────────────────┐
+             │        Browser           │
+             │ (User visits the site)   │
+             └──────────────┬───────────┘
+                            │  http://10.10.40.30
+                            ▼
+             ┌──────────────────────────┐
+             │         Apache           │
+             │    (Production Webserver)│
+             └──────────────┬───────────┘
+                            │  passes request into
+                            │
+                            ▼
+             ┌──────────────────────────┐
+             │           WSGI           │
+             │ (Apache ↔ Flask bridge)  │
+             └──────────────┬───────────┘
+                            │  runs your Flask app
+                            ▼
+             ┌──────────────────────────┐
+             │           Flask          │
+             │    (Python backend)      │
+             └──────────────┬───────────┘
+                            │ uses SQLAlchemy ORM
+                            ▼
+             ┌──────────────────────────┐
+             │        PostgreSQL        │
+             │ (Database for clinic)    │
+             └──────────────┬───────────┘
+                            │
+                       (optional)
+                            ▼
+             ┌──────────────────────────┐
+             │          pgAdmin         │
+             │  (DB GUI via Docker)     │
+             └──────────────────────────┘
+Everything above works together like this:
+
+Apache → WSGI → Flask → SQLAlchemy → PostgreSQL
+pgAdmin is only for manual database management.
+ORM converts your Python code → into SQL → runs it → and gives the result back as a Python object. 
+
+# 1. PostgreSQL + pgAdmin Section (Docker)
+Purpose:
+Set up database server (PostgreSQL)
+Allow remote tools (pgAdmin) to connect
+Create DB user + db for Flask
+Flask needs a database to store: patients, appointments, users, logs, etc. -> PostgreSQL is that database.
+Create a PostgreSQL user -> Gumawa tayo ng account sa PostgreSQL para si Flask makapasok.
+Create the PostgreSQL database where Flask will store its tables -> Ito yung real database kung saan ilalagay ang tables (Patients, Appointment, Users).
+
+How it connects:
+✔ PostgreSQL stores all patient, appointment, user, and logs
+✔ Flask reads/writes data to PostgreSQL
+✔ pgAdmin connects to PostgreSQL for GUI access
+✔ Docker pgAdmin is a separate container but talks to PostgreSQL via port 5432 - because they are same database but NOT the same container
+🧩 PostgreSQL = database server
+Running directly on Ubuntu (NOT in Docker)
+
+🧩 pgAdmin = GUI tool
+Running inside Docker
+🚫 It is NOT the database
+✔ It is only a viewer (like PhpMyAdmin)
+
+They are SEPARATE, but:
+pgAdmin → connects via → 10.10.40.30:5432 → PostgreSQL
+
+Exactly like this diagram:
+[pgAdmin container]  --5432-->  [PostgreSQL on Ubuntu]
+So yes, they share the same DB, but pgAdmin is only a “remote control panel”.
+
+
+# 2. Flask + Virtual Environment Section
+Purpose:
+Install Flask and Python dependencies
+Keep packages isolated
+Run your backend locally (before Apache)
+
+How it connects:
+✔ Flask connects to PostgreSQL using SQLAlchemy
+✔ Flask runs inside the project directory /var/www/healthclinic
+✔ When deployed, Flask is run by WSGI, not by python run.py
+
+
+# 3. App Folder Structure
+Purpose:
+Organizes code:
+- __init__.py → creates Flask app + DB connection
+- routes.py → defines website URLs
+- models.py → defines database tables
+- templates/ → HTML files
+- static/ → images, CSS, JS
+
+How it connects:
+✔ Apache loads Flask via WSGI → which loads create_app() from here
+✔ SQLAlchemy uses models.py to create PostgreSQL tables
+
+
+# 4. SQLAlchemy + PostgreSQL Connection (init.py)
+Purpose:
+Connect Flask to PostgreSQL
+Initialize SQLAlchemy instance
+Store DB URI
+SQLAlchemy “DB URI” - Uniform Resource Identifier - “how Flask connects to the database”
+Your URI:
+postgresql://webadmin:T%40ylorSwift13@127.0.0.1:5432/healthclinic
+*** This string is stored in __init__.py ***
+
+How it connects:
+✔ SQLAlchemy handles all INSERT, SELECT, UPDATE, DELETE
+✔ PostgreSQL receives these operations
+✔ Flask functions in routes.py call SQLAlchemy
+This does:
+Flask receives form data
+SQLAlchemy turns Python objects → SQL commands
+SQLAlchemy inserts into PostgreSQL
+PostgreSQL stores data
+
+Flow:
+User submits form → Flask route → SQLAlchemy → PostgreSQL database
+
+# 5. Creating Tables with db.create_all()
+Purpose:
+Build database tables automatically using models.
+
+How it connects:
+✔ Flask app context → required so SQLAlchemy knows which app is running
+✔ PostgreSQL receives commands to create tables based on models
+
+# 6. run.py (Development mode)
+Purpose:
+Run Flask manually with:
+
+python3 run.py
+How it connects:
+✔ Used only for local testing before deployment
+❗ NOT used after Apache is installed
+
+Apache will replace it.
+“So we don’t use python run.py anymore?” - Correct.
+Now:
+✔ Apache runs Flask
+✔ healthclinic.wsgi is the Flask entry
+✔ run.py is deprecated (pang-testing lang)
+You can delete run.py if you want; it’s not used.
+
+# 7. Apache + WSGI (Production mode)
+This is where most people get confused — but here's the simple version:
+
+🔥 Apache (Web Server)
+Purpose:
+Accepts web traffic on port 80
+Routes requests to WSGI
+Serves HTML pages and static files
+
+How it connects:
+✔ When user visits http://10.10.40.30, Apache receives it
+✔ Apache passes the request to WSGI
+
+🔥 WSGI (Connector)
+Purpose:
+Connects Apache ↔ Flask
+Loads your app usingvcreate_app()
+WSGI file example:
+
+application = create_app()
+How it connects:
+✔ Apache executes the WSGI script
+✔ WSGI runs the Flask app
+✔ Flask queries PostgreSQL
+✔ Response returns back to the browser
+
+# 8. Apache VirtualHost Configuration - This is the part where you deployed Flask into a real web server
+Steps:
+1. Install Apache
+2. Install mod_wsgi
+3. Create config:
+/etc/apache2/sites-available/healthclinic.conf
+4. Enable site:
+5. sudo a2ensite healthclinic.conf
+6. Restart Apache
+7. Done → system is now LIVE
+
+Purpose:
+Tell Apache:
+Where the Flask code is
+Where the virtual environment is
+What WSGI file to run
+How to serve the website
+
+How it connects:
+✔ Ties everything together
+✔ Without this file, Apache cannot run Flask
+✔ After enabling it, the site runs automatically
+
+# 9. Final Deployment Flow
+Here’s the final working flow:
+User → Apache → WSGI → Flask app → SQLAlchemy → PostgreSQL
+
+And optionally:
+pgAdmin → PostgreSQL (for admin GUI)
+
+# 🎯 THE MOST IMPORTANT PARTS TO HIGHLIGHT IN SOP
+If you're documenting and want it CLEAN:
+
+A. Flask ↔ PostgreSQL
+- SQLAlchemy handles the connection
+- DB URI is defined inside __init__.py
+- PostgreSQL stores all data
+
+B. Apache ↔ WSGI ↔ Flask
+- Apache listens on port 80
+- WSGI loads the Flask app
+- Flask processes routes and talks to PostgreSQL
+
+C. pgAdmin
+- Not part of the website
+- Only for DB administration
+- Runs via Docker container
+
+D. Folder Structure
+/var/www/healthclinic
+venv for python
+app/ for Flask code
+healthclinic.wsgi for Apache
+
+
+
+
+
+
+
+
+
+
+
+
 
 

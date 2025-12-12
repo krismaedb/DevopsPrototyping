@@ -55,14 +55,14 @@ The Healthcare Clinic IT Infrastructure project delivers a complete, production-
 
 ### 1.3 Key Achievements
 
-✅ **99.9% uptime** through redundant routers and domain controllers  
-✅ **Zero-trust segmentation** with VLAN isolation and ACLs  
-✅ **Automated monitoring** of 9 devices (4 Cisco, 2 Windows, 3 Linux)  
-✅ **Secure remote access** without exposing public IPs  
-✅ **Centralized authentication** with Active Directory  
-✅ **Professional email system** with spam protection  
-✅ **Web-based patient portal** with appointment booking  
-✅ **20TB storage capacity** with ZFS redundancy
+  **99.9% uptime** through redundant routers and domain controllers  
+  **Zero-trust segmentation** with VLAN isolation and ACLs  
+  **Automated monitoring** of 9 devices (4 Cisco, 2 Windows, 3 Linux)  
+  **Secure remote access** without exposing public IPs  
+  **Centralized authentication** with Active Directory  
+  **Professional email system** with spam protection  
+  **Web-based patient portal** with appointment booking  
+  **20TB storage capacity** with ZFS redundancy
 
 ---
 
@@ -77,15 +77,37 @@ The Healthcare Clinic IT Infrastructure project delivers a complete, production-
                          │   DHCP: 10.128.250.0/24   │
                          └─────────────┬─────────────┘
                                        │
-                          
-                          ┌────────────┴────────────┐
-                          │   ROUTER R2 (STANDBY)   │
-                          │   Priority: 90          │
-                          └────────────┬────────────┘
                                        │
-                    ┌──────────────────┴──────────────────┐
-                    │                                     │
-         ┌──────────┴─────────┐              ┌───────────┴──────────┐
+                          ┌────────────┴────────────┐
+                          │                         │
+                 ┌────────┴────────┐      ┌────────┴────────┐
+                 │   ROUTER R1     │      │   ROUTER R2     │
+                 │   (ACTIVE)      │◄─────│   (STANDBY)     │
+                 │ Priority: 110   │ HSRP │ Priority: 90    │
+                 │                 │      │                 │
+                 │ WAN: DHCP       │      │ WAN: Shutdown   │
+                 │ NAT: ENABLED    │      │ NAT: DISABLED   │
+                 │ (Translates all │      │ (Routes via R1) │
+                 │  internal IPs)  │      │                 │
+                 │                 │      │                 │
+                 │ G0/1    G0/0    │      │ G0/1    G0/0    │
+                 └───┬──────┬──────┘      └───┬──────┬──────┘
+                     │      │                 │      │
+                 WAN │      │ LAN         MITT│      │ LAN
+              (DHCP) │      │ Trunk      (DHCP)      │ Trunk
+             (NAT    │      │(NAT Inside)            │
+             Outside)│      │                 X      │
+                     │      │                        │
+                     │      └────────────┬───────────┘
+                     │                   │
+                     │                   │
+                     │    ┌──────────────┴───────────────┐
+                     │    │                              │
+                     │    │                              │
+           To MITT ──┘    │                              │
+           DHCP           │                              │
+                          │                              │
+         ┌─────────────── │───┐              ┌───────────┴──────────┐
          │   SWITCH SW1       │◄─────────────│   SWITCH SW2         │
          │   10.10.40.5       │ EtherChannel │   10.10.40.6         │
          │   (Primary)        │   LACP Po1   │   (Secondary)        │
@@ -152,13 +174,13 @@ Servers         Patient WiFi                        Clinical        Admin
 #### Normal Operation (R1 Active)
 ```
 Client (10.10.20.100) → Gateway (10.10.20.1 HSRP VIP) 
-→ R1 (10.10.20.2) → NAT → MITT Gateway → Internet ✅
+→ R1 (10.10.20.2) → NAT → MITT Gateway → Internet  
 ```
 
 #### R1 Failure (R2 Becomes Active)
 ```
 Client (10.10.20.100) → Gateway (10.10.20.1 HSRP VIP) 
-→ R2 (10.10.20.3) → R1 VLAN 40 (10.10.40.2) → NAT → Internet ✅
+→ R2 (10.10.20.3) → R1 VLAN 40 (10.10.40.2) → NAT → Internet  
 ```
 
 ---
@@ -1328,7 +1350,7 @@ from app import create_app, db
 app = create_app()
 with app.app_context():
     db.create_all()
-    print("✅ Database tables created!")
+    print("  Database tables created!")
 EOF
 ```
 
@@ -2955,7 +2977,7 @@ sudo docker compose up -d
 sudo docker compose ps
 ```
 
-**All containers should show State: Up** ✅
+**All containers should show State: Up**  
 
 ---
 
@@ -3045,7 +3067,7 @@ Active: ☑
    Password: Clinic@2025!
 ```
 
-**SOGo webmail opens!** ✅
+**SOGo webmail opens!**  
 
 ---
 
@@ -3064,14 +3086,14 @@ Active: ☑
 ### Step 9.2: Check Receipt
 
 1. Refresh inbox
-2. Test email appears ✅
+2. Test email appears  
 
 ### Step 9.3: Test Between Accounts
 
 1. Send from `admin@` to `doctor@`
 2. Logout
 3. Login as `doctor@healthclinic.local`
-4. Check inbox ✅
+4. Check inbox  
 
 ### Step 9.4: Check Containers
 ```bash
@@ -3084,7 +3106,7 @@ sudo docker compose ps
 **In Web UI:**
 
 1. **System** → **Service Status**
-2. All services green ✅
+2. All services green  
 
 ### Step 9.6: Test External Access
 
@@ -3095,7 +3117,7 @@ Username: admin@healthclinic.local
 Password: Clinic@2025!
 ```
 
-**Should work!** ✅
+**Should work!**  
 
 ---
 
@@ -3148,23 +3170,23 @@ sudo docker compose up -d
 
 ## Completion Checklist
 ```
-✅ VM created (ID 120, MAIL01)
-✅ Debian 12 installed
-✅ Static IP: 10.10.40.20/24
-✅ XFCE Desktop installed
-✅ Network verified
-✅ Docker installed
-✅ Docker Compose installed
-✅ Mailcow downloaded
-✅ Mailcow configured
-✅ All containers running
-✅ Web UI accessible
-✅ Admin password changed
-✅ Domain added (healthclinic.local)
-✅ Mailboxes created
-✅ Webmail accessible
-✅ Emails send/receive
-✅ All services green
+  VM created (ID 120, MAIL01)
+  Debian 12 installed
+  Static IP: 10.10.40.20/24
+  XFCE Desktop installed
+  Network verified
+  Docker installed
+  Docker Compose installed
+  Mailcow downloaded
+  Mailcow configured
+  All containers running
+  Web UI accessible
+  Admin password changed
+  Domain added (healthclinic.local)
+  Mailboxes created
+  Webmail accessible
+  Emails send/receive
+  All services green
 ```
 
 ---
@@ -3358,18 +3380,18 @@ def send_confirmation(email, appointment):
 ### For School Project
 
 **This provides:**
-- ✅ Working email server
-- ✅ Multiple mailboxes
-- ✅ Webmail interface
-- ✅ Internal communication
-- ✅ Good demonstration
+-   Working email server
+-   Multiple mailboxes
+-   Webmail interface
+-   Internal communication
+-   Good demonstration
 
 **Limitations:**
 - Self-signed SSL
 - No external email
 - No DNS MX records
 - Internal use only
-- Perfect for capstone! ✅
+- Perfect for capstone!  
 
 ### For Production
 
@@ -3385,7 +3407,7 @@ def send_confirmation(email, appointment):
 
 ## Next Steps
 
-1. ✅ MAIL01 complete
+1.   MAIL01 complete
 2. 🔜 Configure ZABBIX01
 3. 🔜 Create DC02 on ESXi
 4. 🔜 Integration testing
@@ -3396,7 +3418,7 @@ def send_confirmation(email, appointment):
 
 ---
 
-## ✅ Step 1: Create Dedicated SMTP Accounts in Mailcow
+##   Step 1: Create Dedicated SMTP Accounts in Mailcow
 
 Before integrating, create **dedicated service accounts** in Mailcow for security and clarity.
 
@@ -3428,7 +3450,7 @@ Before integrating, create **dedicated service accounts** in Mailcow for securit
    - **SMTP port**: `587`
    - **SMTP helo**: `healthclinic.local`
    - **SMTP email**: `zabbix@healthclinic.local`
-   - ✅ **Check**: *Use TLS*
+   -   **Check**: *Use TLS*
    - **Username**: `zabbix@healthclinic.local`
    - **Password**: `Clinic@2025!`
 
@@ -3445,7 +3467,7 @@ Before integrating, create **dedicated service accounts** in Mailcow for securit
    - Trigger a test alert (e.g., stop Apache on WEB01)
    - Check `admin@healthclinic.local` in SOGo — you should get an email!
 
-> ✅ Zabbix now sends alerts **internally** via your secure MAIL01 server.
+>   Zabbix now sends alerts **internally** via your secure MAIL01 server.
 
 ---
 
@@ -3477,7 +3499,7 @@ def send_appointment_email(to_email, patient_name, appointment_time):
     msg = MIMEMultipart()
     msg["From"] = sender_email
     msg["To"] = to_email
-    msg["Subject"] = "✅ Your Appointment is Confirmed"
+    msg["Subject"] = "  Your Appointment is Confirmed"
 
     body = f"""
     Dear {patient_name},
@@ -3498,7 +3520,7 @@ def send_appointment_email(to_email, patient_name, appointment_time):
         server.login(sender_email, sender_password)
         server.sendmail(sender_email, to_email, msg.as_string())
         server.quit()
-        print(f"✅ Email sent to {to_email}")
+        print(f"  Email sent to {to_email}")
         return True
     except Exception as e:
         print(f"❌ Failed to send email: {e}")
@@ -3533,12 +3555,12 @@ def book_appointment():
 
 ## 🔒 Security Notes
 
-- ✅ All communication stays **inside VLAN 40**
-- ✅ No plaintext passwords in logs (use environment variables in production):
+-   All communication stays **inside VLAN 40**
+-   No plaintext passwords in logs (use environment variables in production):
   ```python
   import os
   sender_password = os.getenv('SMTP_PASS')
   ```
-- ✅ Dedicated service accounts prevent credential reuse
+-   Dedicated service accounts prevent credential reuse
 
 ---

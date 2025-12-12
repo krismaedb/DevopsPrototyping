@@ -3564,87 +3564,39 @@ def book_appointment():
 -   Dedicated service accounts prevent credential reuse
 
 ---
-TrueNAS SCALE Setup Guide
-A clean, GitHub-style guide for installing, configuring, and managing TrueNAS SCALE.
 
-TrueNAS is an open-source NAS OS available in two variants:
 
-TrueNAS Core — FreeBSD-based
-TrueNAS SCALE — Linux-based (Debian), recommended for most users due to app support and Kubernetes features
-This guide focuses on TrueNAS SCALE and includes installation, network configuration, pool creation, and key CLI usage.
+## Conclusion
 
-1. Download and Verify ISO
-Download the latest SCALE ISO:
-https://www.truenas.com/download-truenas-scale/
+The **Healthcare Clinic IT Infrastructure** capstone project successfully delivers a secure, scalable, and highly available enterprise-grade network environment tailored to the operational needs of a modern medical facility. Over two weeks, our team of four implemented a fully integrated solution that meets—and in many areas exceeds—the functional, security, and redundancy requirements outlined in the project scope.
 
-Verify checksum (Linux/macOS):
+### ✅ Key Outcomes Achieved
 
-echo "PASTE_SHA256_HERE TrueNAS-SCALE-24.10.iso" | sha256sum --check
+- **Network Resilience**: HSRP and EtherChannel eliminate single points of failure across core routing and switching layers, ensuring 99.9% uptime.
+- **Secure Segmentation**: Four logically isolated VLANs (Patient, Clinical, Admin, IT) enforce zero-trust principles through strict ACLs, preventing lateral movement and protecting sensitive systems.
+- **Centralized Identity & Access**: Dual Active Directory domain controllers provide high-availability authentication, granular RBAC, and policy-driven security for all users and devices.
+- **Mission-Critical Services**:
+  - Internal email via **Mailcow** enables secure staff communication.
+  - A **Flask-based patient portal** on `WEB01` allows appointment booking with database-backed persistence.
+  - **TrueNAS SCALE** delivers 16TB of ZFS-protected, AD-integrated storage with automated snapshots.
+- **Enterprise Monitoring**: **Zabbix** provides real-time visibility into all 9 infrastructure devices, with alerting on performance, availability, and security anomalies.
+- **Secure Remote Access**: **Tailscale VPN** enables encrypted, firewall-friendly remote management—without exposing services to the public internet.
 
-2. Create Bootable USB (8GB+ recommended)
-Identify USB device
-sudo lsblk # Linux diskutil list # macOS
+### 🔐 Security by Design
 
-Write ISO to USB
-sudo dd bs=4M if=TrueNAS-SCALE-24.10.iso of=/dev/sdX status=progress oflag=sync -- ============================================================ -- TrueNAS SCALE INSTALLATION & SETUP GUIDE (SQL FORMAT) -- ============================================================
+Every layer of this infrastructure incorporates defense-in-depth:
+- Network ACLs restrict inter-VLAN traffic.
+- Host-based firewalls (Windows Defender + UFW) enforce least-privilege access.
+- Password policies, GPOs, and role-based file permissions ensure only authorized users access sensitive data.
+- All administrative access requires strong credentials and is restricted to trusted subnets.
 
-3. Hardware Preparation & Installation
-Minimum Requirements:
--- • 8GB RAM (16GB+ recommended for apps) -- • Dedicated boot drive (SSD/HDD 32GB+) -- • One or more data drives for storage pools
+### 🚀 Production-Ready Foundation
 
-Installation Steps:
--- 1. Boot from USB -- 2. Choose: 1) Install/Upgrade -- 3. Select your OS drive -- 4. Set root password -- 5. Reboot into TrueNAS SCALE
+While built in a controlled lab environment using MITT’s Capstone network, this architecture mirrors real-world healthcare IT standards:
+- Compliant with basic HIPAA-inspired principles (segmentation, audit logs, access controls).
+- Documented configurations, IP schemas, and running device configs ensure reproducibility.
+- Backup, monitoring, and disaster recovery procedures are defined and partially automated.
 
-4. Initial Network Configuration (Console Setup)
--- After booting, you’ll see the Console Setup Menu.
+This project demonstrates not only our team’s mastery of networking, virtualization, system administration, and security—but also our ability to **translate business requirements into a cohesive, operational IT ecosystem**.
 
-Option 1 (Recommended) — Set Static IP:
--- Console → 1) Configure Network Interface
-
-Option 2 — Shell (Advanced):
--- Use the following commands (example only):
-
--- ifconfig eth0 inet 192.168.1.100 netmask 255.255.255.0; -- route add default 192.168.1.1; -- echo 'nameserver 8.8.8.8' > /etc/resolv.conf; -- ping 8.8.8.8;
-
--- Replace eth0 with your correct network interface.
-
-5. Access Web UI & Basic Setup
--- After networking is configured, access TrueNAS UI via: -- http://YOUR_TRUENAS_IP
-
--- First steps: -- • Update system → System Settings → Update -- • Create Storage Pool → Storage → Pools → Add -- • Create Datasets → Storage → Datasets → Add -- • Create SMB/NFS shares → Sharing -- • Enable SSH → Services → SSH → Enable
-
-6. Useful Shell Commands
--- System Info: -- midclt call system.version; -- uname -a;
-
--- ZFS Storage: -- zpool status; -- zpool scrub tank;
-
--- User Management (Debian-style): -- adduser newuser;
-
--- Logs: -- dmesg | tail; -- tail -f /var/log/messages;
-
--- Reboot/Shutdown: -- reboot; -- poweroff;
-
--- Exit shell: -- exit;
-
-7. Backup Configuration
--- Web UI → System Settings → General → Manage Configuration → Download
-
--- Always back up your configuration after: -- • Creating pools -- • Adding users -- • Configuring shares -- • Joining AD
-
--- Notes
-
--- • Do NOT use apt install on TrueNAS SCALE — unsupported and may break the system. -- • Use the TrueNAS UI or SCALE API for changes.
-
-12. Conclusion
-The Healthcare Clinic IT Infrastructure capstone project successfully delivers a secure, scalable, and highly available enterprise-grade network environment tailored to the operational needs of a modern medical facility. Over two weeks, our team of four implemented a fully integrated solution that meets—and in many areas exceeds—the functional, security, and redundancy requirements outlined in the project scope.
-
- Key Outcomes Achieved
-Network Resilience: HSRP and EtherChannel eliminate single points of failure across core routing and switching layers, ensuring 99.9% uptime.
-Secure Segmentation: Four logically isolated VLANs (Patient, Clinical, Admin, IT) enforce zero-trust principles through strict ACLs, preventing lateral movement and protecting sensitive systems.
-Centralized Identity & Access: Dual Active Directory domain controllers provide high-availability authentication, granular RBAC, and policy-driven security for all users and devices.
-Mission-Critical Services:
-Internal email via Mailcow enables secure staff communication.
-A Flask-based patient portal on WEB01 allows appointment booking with database-backed persistence.
-TrueNAS SCALE delivers 16TB of ZFS-protected, AD-integrated storage with automated snapshots.
-Enterprise Monitoring: Zabbix provides real-time visibility into all 9 infrastructure devices, with alerting on performance, availability, and security anomalies.
-Secure Remote Access: Tailscale VPN enables encrypted, firewall-friendly remote management—without exposing services to the public internet.
+We are confident that, if deployed in a live clinic, this infrastructure would provide **reliable, secure, and user-friendly services** to clinicians, staff, and patients—while giving IT teams full visibility, control, and peace of mind.

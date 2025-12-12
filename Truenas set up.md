@@ -28,14 +28,14 @@ This guide focuses on **TrueNAS SCALE** and includes installation, network confi
 --  TrueNAS SCALE INSTALLATION & SETUP GUIDE (SQL FORMAT)
 -- ============================================================
 
--- 3. Hardware Preparation & Installation
+ ##  3. Hardware Preparation & Installation
 -- ---------------------------------------
--- Minimum Requirements:
+#  Minimum Requirements:
 --   • 8GB RAM (16GB+ recommended for apps)
 --   • Dedicated boot drive (SSD/HDD 32GB+)
 --   • One or more data drives for storage pools
 
--- Installation Steps:
+#  Installation Steps:
 --   1. Boot from USB
 --   2. Choose: 1) Install/Upgrade
 --   3. Select your OS drive
@@ -43,14 +43,14 @@ This guide focuses on **TrueNAS SCALE** and includes installation, network confi
 --   5. Reboot into TrueNAS SCALE
 
 -- ------------------------------------------------------------
--- 4. Initial Network Configuration (Console Setup)
+ ##  4. Initial Network Configuration (Console Setup)
 -- ------------------------------------------------------------
 -- After booting, you’ll see the Console Setup Menu.
 
--- Option 1 (Recommended) — Set Static IP:
+ #  Option 1 (Recommended) — Set Static IP:
 --   Console → 1) Configure Network Interface
 
--- Option 2 — Shell (Advanced):
+ #  Option 2 — Shell (Advanced):
 --   Use the following commands (example only):
 
 --   ifconfig eth0 inet 192.168.1.100 netmask 255.255.255.0;
@@ -61,7 +61,7 @@ This guide focuses on **TrueNAS SCALE** and includes installation, network confi
 -- Replace `eth0` with your correct network interface.
 
 -- ------------------------------------------------------------
--- 5. Access Web UI & Basic Setup
+ ##  5. Access Web UI & Basic Setup
 -- ------------------------------------------------------------
 -- After networking is configured, access TrueNAS UI via:
 --   http://YOUR_TRUENAS_IP
@@ -74,7 +74,7 @@ This guide focuses on **TrueNAS SCALE** and includes installation, network confi
 --   • Enable SSH → Services → SSH → Enable
 
 -- ------------------------------------------------------------
--- 6. Useful Shell Commands
+ ##  6. Useful Shell Commands
 -- ------------------------------------------------------------
 
 -- System Info:
@@ -100,7 +100,7 @@ This guide focuses on **TrueNAS SCALE** and includes installation, network confi
 --   exit;
 
 -- ------------------------------------------------------------
--- 7. Backup Configuration
+ ##  7. Backup Configuration
 -- ------------------------------------------------------------
 -- Web UI → System Settings → General → Manage Configuration → Download
 
@@ -116,8 +116,3 @@ This guide focuses on **TrueNAS SCALE** and includes installation, network confi
 -- • Do NOT use `apt install` on TrueNAS SCALE — unsupported and may break the system.
 -- • Use the TrueNAS UI or SCALE API for changes.
 
--- ------------------------------------------------------------
--- License
--- ------------------------------------------------------------
--- MIT License
--- ============================================================

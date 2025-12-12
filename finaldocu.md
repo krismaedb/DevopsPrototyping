@@ -96,7 +96,7 @@ The Healthcare Clinic IT Infrastructure project delivers a complete, production-
                  WAN │      │ LAN         MITT│      │ LAN
               (DHCP) │      │ Trunk      (DHCP)      │ Trunk
              (NAT    │      │(NAT Inside)            │
-             Outside)│      │                 X      │
+             Outside)│      │                        │
                      │      │                        │
                      │      └────────────┬───────────┘
                      │                   │
@@ -3634,3 +3634,17 @@ Option 2 — Shell (Advanced):
 -- Notes
 
 -- • Do NOT use apt install on TrueNAS SCALE — unsupported and may break the system. -- • Use the TrueNAS UI or SCALE API for changes.
+
+12. Conclusion
+The Healthcare Clinic IT Infrastructure capstone project successfully delivers a secure, scalable, and highly available enterprise-grade network environment tailored to the operational needs of a modern medical facility. Over two weeks, our team of four implemented a fully integrated solution that meets—and in many areas exceeds—the functional, security, and redundancy requirements outlined in the project scope.
+
+ Key Outcomes Achieved
+Network Resilience: HSRP and EtherChannel eliminate single points of failure across core routing and switching layers, ensuring 99.9% uptime.
+Secure Segmentation: Four logically isolated VLANs (Patient, Clinical, Admin, IT) enforce zero-trust principles through strict ACLs, preventing lateral movement and protecting sensitive systems.
+Centralized Identity & Access: Dual Active Directory domain controllers provide high-availability authentication, granular RBAC, and policy-driven security for all users and devices.
+Mission-Critical Services:
+Internal email via Mailcow enables secure staff communication.
+A Flask-based patient portal on WEB01 allows appointment booking with database-backed persistence.
+TrueNAS SCALE delivers 16TB of ZFS-protected, AD-integrated storage with automated snapshots.
+Enterprise Monitoring: Zabbix provides real-time visibility into all 9 infrastructure devices, with alerting on performance, availability, and security anomalies.
+Secure Remote Access: Tailscale VPN enables encrypted, firewall-friendly remote management—without exposing services to the public internet.

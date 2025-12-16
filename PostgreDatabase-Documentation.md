@@ -1,16 +1,16 @@
-# 🏥 Healthcare Clinic IT Infrastructure - Complete Documentation
+# PostgreSQL Database Documentation
 
 **Project:** Healthcare Clinic Capstone  
 **Institution:** Manitoba Institute of Trades and Technology (M.I.T.T.)  
 **Program:** Network and Systems Administrator Diploma  
-**Team Lead:** Kristine Bagsican  
+**Team:** Kristine Bagsican and Team
 **Team Size:** 4 members  
-**Duration:** 5 weeks  
+**Duration:** 2 weeks  
 **Location:** Winnipeg, Manitoba, Canada
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 1. [Executive Summary](#executive-summary)
 2. [Network Architecture](#network-architecture)
@@ -58,15 +58,15 @@ The Healthcare Clinic IT Infrastructure project delivers a complete, production-
 
 ### 1.3 Key Achievements
 
-✅ **99.9% uptime** through redundant routers and domain controllers  
-✅ **Zero-trust segmentation** with VLAN isolation and ACLs  
-✅ **Automated monitoring** of 9 devices (4 Cisco, 2 Windows, 3 Linux)  
-✅ **Secure remote access** without exposing public IPs  
-✅ **Centralized authentication** with Active Directory  
-✅ **Professional email system** with spam protection  
-✅ **Web-based patient portal** with appointment booking  
-✅ **20TB storage capacity** with ZFS redundancy  
-✅ **Production-grade databases** with PostgreSQL for web and monitoring systems
+  **99.9% uptime** through redundant routers and domain controllers  
+  **Zero-trust segmentation** with VLAN isolation and ACLs  
+  **Automated monitoring** of 9 devices (4 Cisco, 2 Windows, 3 Linux)  
+  **Secure remote access** without exposing public IPs  
+  **Centralized authentication** with Active Directory  
+  **Professional email system** with spam protection  
+  **Web-based patient portal** with appointment booking  
+  **20TB storage capacity** with ZFS redundancy  
+  **Production-grade databases** with PostgreSQL for web and monitoring systems
 
 ---
 
@@ -835,12 +835,12 @@ def init_database(sample_data=False):
     with app.app_context():
         print("Creating database tables...")
         db.create_all()
-        print("✅ Database tables created successfully!")
+        print(" Database tables created successfully!")
         
         if sample_data:
             print("\nAdding sample data...")
             add_sample_data()
-            print("✅ Sample data added successfully!")
+            print(" Sample data added successfully!")
         
         # Verify tables
         print("\nVerifying tables:")
@@ -1025,13 +1025,13 @@ python3 init_db.py --sample
 
 # Expected output:
 # Creating database tables...
-# ✅ Database tables created successfully!
+#  Database tables created successfully!
 # 
 # Adding sample data...
 #   ✓ Created 4 staff users
 #   ✓ Created 3 sample patients
 #   ✓ Created 3 sample appointments
-# ✅ Sample data added successfully!
+#  Sample data added successfully!
 # 
 # Verifying tables:
 # Found 4 tables:
@@ -1152,7 +1152,7 @@ Password: Clinic@2025!
 - Maintenance database: `healthclinic`
 - Username: `webadmin`
 - Password: `T@ylorSwift13`
-- Save password: ✅ Yes
+- Save password: Yes
 
 **SSL Tab:**
 - SSL mode: `Prefer`
@@ -1175,7 +1175,7 @@ Click **Save**
 - Maintenance database: `zabbix`
 - Username: `zabbixuser`
 - Password: `g3company!@#`
-- Save password: ✅ Yes
+- Save password: Yes
 
 **SSL Tab:**
 - SSL mode: `Prefer`
@@ -1225,7 +1225,7 @@ echo "Starting backup of healthclinic database..."
 PGPASSWORD=$PGPASSWORD pg_dump -h $WEB_HOST -U $WEB_USER -d $WEB_DB -F c -f "$BACKUP_DIR/healthclinic_${DATE}.backup"
 
 if [ $? -eq 0 ]; then
-    echo "✅ Backup completed: healthclinic_${DATE}.backup"
+    echo "  Backup completed: healthclinic_${DATE}.backup"
 else
     echo "❌ Backup failed!"
     exit 1
@@ -1233,11 +1233,11 @@ fi
 
 # Compress backup
 gzip "$BACKUP_DIR/healthclinic_${DATE}.backup"
-echo "✅ Backup compressed: healthclinic_${DATE}.backup.gz"
+echo "  Backup compressed: healthclinic_${DATE}.backup.gz"
 
 # Remove backups older than retention period
 find $BACKUP_DIR -name "healthclinic_*.backup.gz" -mtime +$RETENTION_DAYS -delete
-echo "✅ Old backups removed (retention: $RETENTION_DAYS days)"
+echo "  Old backups removed (retention: $RETENTION_DAYS days)"
 
 # Calculate backup size
 BACKUP_SIZE=$(du -sh "$BACKUP_DIR/healthclinic_${DATE}.backup.gz" | cut -f1)
@@ -1294,7 +1294,7 @@ pg_restore -h localhost -U webadmin -d healthclinic -c /var/backups/postgresql/h
 # Restart web application
 sudo systemctl start apache2
 
-echo "✅ Database restored successfully!"
+echo "  Database restored successfully!"
 ```
 
 #### 6.6.3 Database Maintenance Commands
@@ -1655,8 +1655,7 @@ sudo ufw deny 5432 comment 'Block PostgreSQL from other networks'
 
 ### Appendix C: Project Team
 
-**Team Lead:** Kristine Bagsican  
-**Team Members:** [3 additional members]  
+**Team:** Kristine Bagsican, Swathi Anil, Kunwei Li, Jaered Bacolod
 **Institution:** Manitoba Institute of Trades and Technology (M.I.T.T.)  
 **Program:** Network and Systems Administrator Diploma  
 **Location:** Winnipeg, Manitoba, Canada  
@@ -1676,10 +1675,9 @@ sudo ufw deny 5432 comment 'Block PostgreSQL from other networks'
 **Document Version:** 1.0  
 **Last Updated:** December 16, 2025  
 **Prepared By:** Kristine Bagsican & Team  
-**Status:** Production Ready ✅
+**Status:** Production Ready
 
 ---
 
 *This documentation is comprehensive and production-ready. All systems are operational and tested.*
 
-🏥 **Healthcare Clinic IT Infrastructure - Complete Database Documentation**

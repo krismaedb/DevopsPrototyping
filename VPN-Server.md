@@ -539,7 +539,7 @@ mstsc
 
 # Computer: 10.10.40.10
 # Username: HEALTHCLINIC\Administrator
-# Password: Clinic@2025!
+# Password: g3company!@#
 
 # Click "Connect"
 # Should open RDP session to DC01! ✅
@@ -1537,7 +1537,7 @@ sudo systemctl restart systemd-resolved
 | **Advertised Routes** | 10.10.0.0/16 |
 | **Admin Console** | https://login.tailscale.com |
 | **Server Username** | vp nadmin |
-| **Server Password** | Clinic@2025! |
+| **Server Password** | g3company!@# |
 
 ---
 

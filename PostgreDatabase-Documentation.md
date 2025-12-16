@@ -3,7 +3,7 @@
 **Project:** Healthcare Clinic Capstone  
 **Institution:** Manitoba Institute of Trades and Technology (M.I.T.T.)  
 **Program:** Network and Systems Administrator Diploma  
-**Team:** Kristine Bagsican and Team
+**Team:** Kristine Bagsican, Swathi Anil, Kunwei Li, Jaered Bacolod
 **Team Size:** 4 members  
 **Duration:** 2 weeks  
 **Location:** Winnipeg, Manitoba, Canada

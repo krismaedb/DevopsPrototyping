@@ -1536,7 +1536,7 @@ sudo systemctl restart systemd-resolved
 | **Tailscale IP** | 100.64.1.1 |
 | **Advertised Routes** | 10.10.0.0/16 |
 | **Admin Console** | https://login.tailscale.com |
-| **Server Username** | vp nadmin |
+| **Server Username** | vpnadmin |
 | **Server Password** | g3company!@# |
 
 ---

@@ -1,4 +1,4 @@
-# 🏥 Healthcare Clinic IT Infrastructure - Complete Documentation
+#  Healthcare Clinic IT Infrastructure - Complete Documentation
 
 **Project:** Healthcare Clinic Capstone  
 **Institution:** Manitoba Institute of Trades and Technology (M.I.T.T.)  
@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 1. [Executive Summary](#executive-summary)
 2. [Network Architecture](#network-architecture)
@@ -3687,7 +3687,7 @@ This guide focuses on **TrueNAS SCALE** and includes installation, network confi
 
 The **Healthcare Clinic IT Infrastructure** capstone project successfully delivers a secure, scalable, and highly available enterprise-grade network environment tailored to the operational needs of a modern medical facility. Over two weeks, our team of four implemented a fully integrated solution that meets—and in many areas exceeds—the functional, security, and redundancy requirements outlined in the project scope.
 
-### ✅ Key Outcomes Achieved
+###  Key Outcomes Achieved
 
 - **Network Resilience**: HSRP and EtherChannel eliminate single points of failure across core routing and switching layers, ensuring 99.9% uptime.
 - **Secure Segmentation**: Four logically isolated VLANs (Patient, Clinical, Admin, IT) enforce zero-trust principles through strict ACLs, preventing lateral movement and protecting sensitive systems.
@@ -3699,7 +3699,7 @@ The **Healthcare Clinic IT Infrastructure** capstone project successfully delive
 - **Enterprise Monitoring**: **Zabbix** provides real-time visibility into all 9 infrastructure devices, with alerting on performance, availability, and security anomalies.
 - **Secure Remote Access**: **Tailscale VPN** enables encrypted, firewall-friendly remote management—without exposing services to the public internet.
 
-### 🔐 Security by Design
+###  Security by Design
 
 Every layer of this infrastructure incorporates defense-in-depth:
 - Network ACLs restrict inter-VLAN traffic.
@@ -3707,7 +3707,7 @@ Every layer of this infrastructure incorporates defense-in-depth:
 - Password policies, GPOs, and role-based file permissions ensure only authorized users access sensitive data.
 - All administrative access requires strong credentials and is restricted to trusted subnets.
 
-### 🚀 Production-Ready Foundation
+### Production-Ready Foundation
 
 While built in a controlled lab environment using MITT’s Capstone network, this architecture mirrors real-world healthcare IT standards:
 - Compliant with basic HIPAA-inspired principles (segmentation, audit logs, access controls).
